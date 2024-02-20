@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Todo List</h1>
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" id="title" class="form-control mb-2" placeholder="Title">
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="note" class="form-control mb-2" placeholder="Note">
+            </div>
+            <div class="col-md-3">
+                <input type="date" id="dueDate" class="form-control mb-2" placeholder="Due Date">
+            </div>
+            <div class="col-md-2">
+                <select id="complete" class="form-control mb-2">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select id="category" class="form-control mb-2">
+                    <option value="General">General</option>
+                    <option value="Body Exercise">Body Exercise</option>
+                    <option value="Learning">Learning</option>
+                    <option value="Chores">Chores</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button onclick="addTodo()" class="btn btn-primary mb-2">Add</button>
+            </div>
+        </div>
+        <div id="todos"></div>
+        <div id="details"></div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

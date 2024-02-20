@@ -1,0 +1,15 @@
+.todo-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.todo-item span {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.todo-item button {
+    margin-left: 5px;
+}
