@@ -34,7 +34,6 @@ function showUpdateTodoForm(todo) {
     }
 }
 
-
 // Function to hide the update todo form
 function hideUpdateTodoForm() {
     const updateTodoForm = document.getElementById('updateTodoForm');
@@ -42,6 +41,8 @@ function hideUpdateTodoForm() {
     updateTodoFormVisible = false;
 }
 
+
+// Function to render todo list
 function renderTodos(todos) {
     const todosContainer = document.getElementById('todos');
     const detailsContainer = document.getElementById('details');
@@ -72,27 +73,27 @@ function renderTodos(todos) {
         const categoryTd = document.createElement('td');
         categoryTd.textContent = todo.category;
 
-        const updateButtonTd = document.createElement('td'); // Create td for update button
+        const updateButtonTd = document.createElement('td'); 
         const updateButton = document.createElement('button');
         updateButton.textContent = 'Update';
         updateButton.classList.add('btn', 'btn-primary', 'me-2');
         updateButton.addEventListener('click', () => showUpdateTodoForm(todo));
-        updateButtonTd.appendChild(updateButton); // Append button to its td
+        updateButtonTd.appendChild(updateButton); 
 
-        const deleteButtonTd = document.createElement('td'); // Create td for delete button
+        const deleteButtonTd = document.createElement('td'); 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('btn', 'btn-danger');
         deleteButton.addEventListener('click', () => deleteTodoConfirm(todo.id));
-        deleteButtonTd.appendChild(deleteButton); // Append button to its td
+        deleteButtonTd.appendChild(deleteButton); 
 
         todoTr.appendChild(titleTd);
         todoTr.appendChild(noteTd);
         todoTr.appendChild(dueDateTd);
         todoTr.appendChild(statusTd);
         todoTr.appendChild(categoryTd);
-        todoTr.appendChild(updateButtonTd); // Append update button td
-        todoTr.appendChild(deleteButtonTd); // Append delete button td
+        todoTr.appendChild(updateButtonTd); 
+        todoTr.appendChild(deleteButtonTd); 
 
         todosContainer.appendChild(todoTr);
     });
@@ -146,7 +147,7 @@ function addTodo() {
 
 // submitUpdate function
 function submitUpdate() {
-    const todoId = document.getElementById('updateTodoId').value; // Retrieve todoId from hidden input field
+    const todoId = document.getElementById('updateTodoId').value; 
     const updateTitleInput = document.getElementById('updateTitle').value;
     const updateNoteInput = document.getElementById('updateNote').value;
     const updateDueDateInput = new Date(document.getElementById('updateDueDate').value);
