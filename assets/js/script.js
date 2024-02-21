@@ -1,6 +1,45 @@
 let addTodoFormVisible = false;
 let updateTodoFormVisible = false;
 
+// Function to show the add todo form
+function showAddTodoForm() {
+    if (!addTodoFormVisible && !updateTodoFormVisible) {
+        const addTodoForm = document.getElementById('addTodoForm');
+        addTodoForm.style.display = 'block';
+        addTodoFormVisible = true;
+    }
+}
+
+// Function to hide the add todo form
+function hideAddTodoForm() {
+    const addTodoForm = document.getElementById('addTodoForm');
+    addTodoForm.style.display = 'none';
+    addTodoFormVisible = false;
+}
+
+// Function to show the update todo form
+function showUpdateTodoForm(todo) {
+    if (!updateTodoFormVisible && !addTodoFormVisible) {
+        const updateTodoForm = document.getElementById('updateTodoForm');
+        // Populate form fields with todo data
+        document.getElementById('updateTitle').value = todo.title;
+        document.getElementById('updateNote').value = todo.description;
+        document.getElementById('updateDueDate').value = todo.date_due;
+        document.getElementById('updateComplete').value = todo.status;
+        document.getElementById('updateCategory').value = todo.category;
+
+        updateTodoForm.style.display = 'block';
+        updateTodoFormVisible = true;
+    }
+}
+
+// Function to hide the update todo form
+function hideUpdateTodoForm() {
+    const updateTodoForm = document.getElementById('updateTodoForm');
+    updateTodoForm.style.display = 'none';
+    updateTodoFormVisible = false;
+}
+
 
 function renderTodos(todos) {
     const todosContainer = document.getElementById('todos');
@@ -32,26 +71,27 @@ function renderTodos(todos) {
         const categoryTd = document.createElement('td');
         categoryTd.textContent = todo.category;
 
-        const actionsTd = document.createElement('td');
+        const updateButtonTd = document.createElement('td'); // Create td for update button
         const updateButton = document.createElement('button');
         updateButton.textContent = 'Update';
         updateButton.classList.add('btn', 'btn-primary', 'me-2');
         updateButton.addEventListener('click', () => showUpdateTodoForm(todo));
+        updateButtonTd.appendChild(updateButton); // Append button to its td
 
+        const deleteButtonTd = document.createElement('td'); // Create td for delete button
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('btn', 'btn-danger');
         deleteButton.addEventListener('click', () => deleteTodoConfirm(todo.id));
-
-        actionsTd.appendChild(updateButton);
-        actionsTd.appendChild(deleteButton);
+        deleteButtonTd.appendChild(deleteButton); // Append button to its td
 
         todoTr.appendChild(titleTd);
         todoTr.appendChild(noteTd);
         todoTr.appendChild(dueDateTd);
         todoTr.appendChild(statusTd);
         todoTr.appendChild(categoryTd);
-        todoTr.appendChild(actionsTd);
+        todoTr.appendChild(updateButtonTd); // Append update button td
+        todoTr.appendChild(deleteButtonTd); // Append delete button td
 
         todosContainer.appendChild(todoTr);
     });
@@ -70,44 +110,22 @@ function showAddTodoForm() {
 function showUpdateTodoForm(todo) {
     if (!updateTodoFormVisible && !addTodoFormVisible) {
         const updateTodoForm = document.getElementById('updateTodoForm');
-        updateTodoForm.innerHTML = `
-            <h3>Update Todo</h3>
-            <div class="form-group">
-                <label for="updateTitle">Title:</label>
-                <input type="text" id="updateTitle" class="form-control" value="${todo.title}">
-            </div>
-            <div class="form-group">
-                <label for="updateNote">Note:</label>
-                <input type="text" id="updateNote" class="form-control" value="${todo.description}">
-            </div>
-            <div class="form-group">
-                <label for="updateDueDate">Due Date:</label>
-                <input type="date" id="updateDueDate" class="form-control" value="${todo.date_due}">
-            </div>
-            <div class="form-group">
-                <label for="updateComplete">Complete:</label>
-                <select id="updateComplete" class="form-control">
-                    <option value="Complete" ${todo.status === 'Complete' ? 'selected' : ''}>Complete</option>
-                    <option value="Pending" ${todo.status === 'Pending' ? 'selected' : ''}>Pending</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="updateCategory">Category:</label>
-                <input type="text" id="updateCategory" class="form-control" value="${todo.category}">
-            </div>
-            <button onclick="submitUpdate(${todo.id})" class="btn btn-primary">Update</button>
-            <button onclick="hideUpdateTodoForm()" class="btn btn-secondary">Cancel</button>
-        `;
+        // Populate form fields with todo data
+        document.getElementById('updateTitle').value = todo.title;
+        document.getElementById('updateNote').value = todo.description;
+        document.getElementById('updateDueDate').value = todo.date_due;
+        document.getElementById('updateComplete').value = todo.status;
+        document.getElementById('updateCategory').value = todo.category;
+
+        const updateButton = document.createElement('button');
+        updateButton.textContent = 'Update';
+        updateButton.classList.add('btn', 'btn-primary');
+        updateButton.addEventListener('click', () => submitUpdate(todo.id)); 
+        updateTodoForm.appendChild(updateButton);
+
         updateTodoForm.style.display = 'block';
         updateTodoFormVisible = true;
     }
-}
-
-// Function to hide the add todo form
-function hideAddTodoForm() {
-    const addTodoForm = document.getElementById('addTodoForm');
-    addTodoForm.style.display = 'none';
-    addTodoFormVisible = false;
 }
 
 // Function to hide the update todo form
@@ -115,7 +133,16 @@ function hideUpdateTodoForm() {
     const updateTodoForm = document.getElementById('updateTodoForm');
     updateTodoForm.innerHTML = '';
     updateTodoForm.style.display = 'none';
-    updateTodoFormVisible = false;
+    updateTodoFormVisible = false; // Reset the flag to false
+}
+
+
+
+// Function to hide the add todo form
+function hideAddTodoForm() {
+    const addTodoForm = document.getElementById('addTodoForm');
+    addTodoForm.style.display = 'none';
+    addTodoFormVisible = false;
 }
 
 // fetchTodos function
@@ -166,10 +193,41 @@ function addTodo() {
 
 // submitUpdate function
 function submitUpdate(todoId) {
-    console.log("Updating todo with ID:", todoId);
-    hideUpdateTodoForm(); 
-    showSuccessMessage('Todo updated successfully!');
+    const updateTitleInput = document.getElementById('updateTitle').value;
+    const updateNoteInput = document.getElementById('updateNote').value;
+    const updateDueDateInput = new Date(document.getElementById('updateDueDate').value);
+    const updateCompleteInput = document.getElementById('updateComplete').value;
+    const updateCategoryInput = document.getElementById('updateCategory').value;
+
+    const formattedDueDate = updateDueDateInput.toISOString().split('T')[0];
+
+    const updatedTodo = {
+        title: updateTitleInput,
+        description: updateNoteInput,
+        date_due: formattedDueDate,
+        status: updateCompleteInput,
+        category: updateCategoryInput
+    };
+
+    fetch(`https://nicodeshub.com/todo_app/api/update_todo/${todoId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedTodo),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update todo');
+        }
+        fetchTodos();
+        hideUpdateTodoForm(); 
+        showSuccessMessage('Todo updated successfully!');
+    })
+    .catch(error => console.error('Error updating todo:', error));
 }
+
+
 
 // deleteTodoConfirm function
 function deleteTodoConfirm(id) {

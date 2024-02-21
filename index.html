@@ -41,25 +41,64 @@
                     </select>
                 </div>
                 <div class="form-group">
-                  <select id="category" class="form-control mb-2">
-                      <option value="General">General</option>
-                      <option value="Work">Work</option>
-                      <option value="Personal">Personal</option>
-                      <option value="Health">Health</option>
-                      <option value="Shopping">Shopping</option>
-                      <option value="Education">Education</option>
-                      <option value="Entertainment">Entertainment</option>
-                      <option value="Others">Others</option>
-                  </select>
-              </div>
-              
+                    <select id="category" class="form-control mb-2">
+                        <option value="General">General</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Health">Health</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Education">Education</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <button onclick="addTodo()" class="btn btn-primary mb-2">Add</button>
-                    <button onclick="hideAddTodoForm()" class="btn btn-secondary mb-2 ms-2">Cancel</button>
-                </div>
+                        <button onclick="hideAddTodoForm()" class="btn btn-secondary mb-2 ms-2">Cancel</button>
+                                        </div>
             </div>
 
-            <div id="updateTodoForm" style="display: none;"></div>
+           <!-- Update the todo form to include IDs for each input field -->
+           <div id="updateTodoForm" style="display: none;">
+            <h3>Update Todo</h3>
+            <div class="form-group">
+                <label for="updateTitle">Title:</label>
+                <input type="text" id="updateTitle" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="updateNote">Note:</label>
+                <input type="text" id="updateNote" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="updateDueDate">Due Date:</label>
+                <input type="date" id="updateDueDate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="updateComplete">Complete:</label>
+                <select id="updateComplete" class="form-control">
+                    <option value="Complete">Complete</option>
+                    <option value="Pending">Pending</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="updateCategory">Category:</label>
+                <select id="updateCategory" class="form-control">
+                    <option value="General">General</option>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Health">Health</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Education">Education</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            <button onclick="submitUpdate()" class="btn btn-primary">Update</button>
+            <button onclick="hideUpdateTodoForm()" class="btn btn-secondary">Cancel</button>
+        </div>
+        
+
 
             <table class="table text-white mb-0">
               <thead>
@@ -69,7 +108,8 @@
                   <th scope="col">Due Date</th>
                   <th scope="col">Status</th>
                   <th scope="col">Category</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Remove</th>
                 </tr>
               </thead>
               <tbody id="todos">
