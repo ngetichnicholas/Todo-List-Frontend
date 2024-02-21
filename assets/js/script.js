@@ -16,13 +16,18 @@ function renderTodos(todos) {
         titleTd.textContent = todo.title;
 
         const noteTd = document.createElement('td');
-        noteTd.textContent = todo.note;
+        noteTd.textContent = todo.description;
+
+        // Format the date to display only the date without time and timezone
+        const dueDate = new Date(todo.date_due);
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const formattedDueDate = dueDate.toLocaleDateString('en-US', options);
 
         const dueDateTd = document.createElement('td');
-        dueDateTd.textContent = todo.date_due;
+        dueDateTd.textContent = formattedDueDate;
 
         const statusTd = document.createElement('td');
-        statusTd.textContent = todo.complete;
+        statusTd.textContent = todo.status;
 
         const categoryTd = document.createElement('td');
         categoryTd.textContent = todo.category;
@@ -73,7 +78,7 @@ function showUpdateTodoForm(todo) {
             </div>
             <div class="form-group">
                 <label for="updateNote">Note:</label>
-                <input type="text" id="updateNote" class="form-control" value="${todo.note}">
+                <input type="text" id="updateNote" class="form-control" value="${todo.description}">
             </div>
             <div class="form-group">
                 <label for="updateDueDate">Due Date:</label>
@@ -82,8 +87,8 @@ function showUpdateTodoForm(todo) {
             <div class="form-group">
                 <label for="updateComplete">Complete:</label>
                 <select id="updateComplete" class="form-control">
-                    <option value="Yes" ${todo.complete === 'Yes' ? 'selected' : ''}>Yes</option>
-                    <option value="No" ${todo.complete === 'No' ? 'selected' : ''}>No</option>
+                    <option value="Complete" ${todo.status === 'Complete' ? 'selected' : ''}>Complete</option>
+                    <option value="Pending" ${todo.status === 'Pending' ? 'selected' : ''}>Pending</option>
                 </select>
             </div>
             <div class="form-group">
@@ -126,18 +131,18 @@ function fetchTodos() {
 // Define the addTodo function globally
 function addTodo() {
     const titleInput = document.getElementById('title').value;
-    const noteInput = document.getElementById('note').value;
+    const noteInput = document.getElementById('description').value;
     const dueDateInput = new Date(document.getElementById('dueDate').value);
-    const completeInput = document.getElementById('complete').value;
+    const completeInput = document.getElementById('status').value;
     const categoryInput = document.getElementById('category').value;
 
     const formattedDueDate = dueDateInput.toISOString().split('T')[0];
 
     const newTodo = {
         title: titleInput,
-        note: noteInput,
+        description: noteInput,
         date_due: formattedDueDate,
-        complete: completeInput,
+        status: completeInput,
         category: categoryInput
     };
 
