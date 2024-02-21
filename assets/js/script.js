@@ -27,11 +27,13 @@ function showUpdateTodoForm(todo) {
         document.getElementById('updateDueDate').value = todo.date_due;
         document.getElementById('updateComplete').value = todo.status;
         document.getElementById('updateCategory').value = todo.category;
+        document.getElementById('updateTodoId').value = todo.id; // Set the value of the hidden input field
 
         updateTodoForm.style.display = 'block';
         updateTodoFormVisible = true;
     }
 }
+
 
 // Function to hide the update todo form
 function hideUpdateTodoForm() {
@@ -39,7 +41,6 @@ function hideUpdateTodoForm() {
     updateTodoForm.style.display = 'none';
     updateTodoFormVisible = false;
 }
-
 
 function renderTodos(todos) {
     const todosContainer = document.getElementById('todos');
@@ -97,54 +98,6 @@ function renderTodos(todos) {
     });
 }
 
-// Function to show the add todo form
-function showAddTodoForm() {
-    if (!addTodoFormVisible && !updateTodoFormVisible) {
-        const addTodoForm = document.getElementById('addTodoForm');
-        addTodoForm.style.display = 'block';
-        addTodoFormVisible = true;
-    }
-}
-
-// Function to show the update todo form
-function showUpdateTodoForm(todo) {
-    if (!updateTodoFormVisible && !addTodoFormVisible) {
-        const updateTodoForm = document.getElementById('updateTodoForm');
-        // Populate form fields with todo data
-        document.getElementById('updateTitle').value = todo.title;
-        document.getElementById('updateNote').value = todo.description;
-        document.getElementById('updateDueDate').value = todo.date_due;
-        document.getElementById('updateComplete').value = todo.status;
-        document.getElementById('updateCategory').value = todo.category;
-
-        const updateButton = document.createElement('button');
-        updateButton.textContent = 'Update';
-        updateButton.classList.add('btn', 'btn-primary');
-        updateButton.addEventListener('click', () => submitUpdate(todo.id)); 
-        updateTodoForm.appendChild(updateButton);
-
-        updateTodoForm.style.display = 'block';
-        updateTodoFormVisible = true;
-    }
-}
-
-// Function to hide the update todo form
-function hideUpdateTodoForm() {
-    const updateTodoForm = document.getElementById('updateTodoForm');
-    updateTodoForm.innerHTML = '';
-    updateTodoForm.style.display = 'none';
-    updateTodoFormVisible = false; // Reset the flag to false
-}
-
-
-
-// Function to hide the add todo form
-function hideAddTodoForm() {
-    const addTodoForm = document.getElementById('addTodoForm');
-    addTodoForm.style.display = 'none';
-    addTodoFormVisible = false;
-}
-
 // fetchTodos function
 function fetchTodos() {
     fetch('https://nicodeshub.com/todo_app/api/todo_list')
@@ -192,7 +145,8 @@ function addTodo() {
 }
 
 // submitUpdate function
-function submitUpdate(todoId) {
+function submitUpdate() {
+    const todoId = document.getElementById('updateTodoId').value; // Retrieve todoId from hidden input field
     const updateTitleInput = document.getElementById('updateTitle').value;
     const updateNoteInput = document.getElementById('updateNote').value;
     const updateDueDateInput = new Date(document.getElementById('updateDueDate').value);
@@ -226,8 +180,6 @@ function submitUpdate(todoId) {
     })
     .catch(error => console.error('Error updating todo:', error));
 }
-
-
 
 // deleteTodoConfirm function
 function deleteTodoConfirm(id) {
