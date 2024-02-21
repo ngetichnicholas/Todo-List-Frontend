@@ -1,9 +1,12 @@
 let addTodoFormVisible = false;
 let updateTodoFormVisible = false;
+let todoListVisible = true; 
+
 
 // Function to show the add todo form
 function showAddTodoForm() {
     if (!addTodoFormVisible && !updateTodoFormVisible) {
+        hideTodoList(); 
         const addTodoForm = document.getElementById('addTodoForm');
         addTodoForm.style.display = 'block';
         addTodoFormVisible = true;
@@ -15,11 +18,13 @@ function hideAddTodoForm() {
     const addTodoForm = document.getElementById('addTodoForm');
     addTodoForm.style.display = 'none';
     addTodoFormVisible = false;
+    showTodoList();
 }
 
 // Function to show the update todo form
 function showUpdateTodoForm(todo) {
     if (!updateTodoFormVisible && !addTodoFormVisible) {
+        hideTodoList();
         const updateTodoForm = document.getElementById('updateTodoForm');
         // Populate form fields with todo data
         document.getElementById('updateTitle').value = todo.title;
@@ -39,8 +44,22 @@ function hideUpdateTodoForm() {
     const updateTodoForm = document.getElementById('updateTodoForm');
     updateTodoForm.style.display = 'none';
     updateTodoFormVisible = false;
+    showTodoList();
 }
 
+// Function to hide the todo list
+function hideTodoList() {
+    const todoList = document.getElementById('todoList');
+    todoList.style.display = 'none';
+    todoListVisible = false;
+}
+
+// Function to show the todo list
+function showTodoList() {
+    const todoList = document.getElementById('todoList');
+    todoList.style.display = 'block';
+    todoListVisible = true;
+}
 
 // Function to render todo list
 function renderTodos(todos) {
