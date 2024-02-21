@@ -17,7 +17,7 @@ function addTodo() {
         category: categoryInput
     };
 
-    fetch('http://127.0.0.1:8000/api/add_todo', {
+    fetch('https://nicodeshub.com/todo_app/api/add_todo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Fetch todos from backend and display them
     function fetchTodos() {
-        fetch('http://127.0.0.1:8000/api/todo_list')
+        fetch('https://nicodeshub.com/todo_app/api/todo_list')
             .then(response => response.json())
             .then(data => {
                 renderTodos(data);
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Show details of a todo
     function showTodoDetails(id) {
-        fetch(`http://127.0.0.1:8000/api/todo_details/${id}`)
+        fetch(`https://nicodeshub.com/todo_app/api/todo_details/${id}`)
             .then(response => response.json())
             .then(data => {
                 detailsContainer.innerHTML = `
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
             category: categoryInput
         };
 
-        fetch('http://127.0.0.1:8000/api/add_todo', {
+        fetch('https://nicodeshub.com/todo_app/api/add_todo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Show update todo form
     function updateTodoForm(todoId) {
         // Fetch the todo details by id
-        fetch(`http://127.0.0.1:8000/api/todo_details/${todoId}`)
+        fetch(`https://nicodeshub.com/todo_app/api/todo_details/${todoId}`)
             .then(response => response.json())
             .then(todo => {
                 // Create the update form HTML
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Delete todo
     function deleteTodo(id) {
-        fetch(`http://127.0.0.1:8000/api/delete_todo/${id}`, {
+        fetch(`https://nicodeshub.com/todo_app/api/delete_todo/${id}`, {
             method: 'DELETE',
         })
         .then(response => {
