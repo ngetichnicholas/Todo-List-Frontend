@@ -93,7 +93,7 @@
                         <option value="Others">Others</option>
                     </select>
                 </div>
-                <input type="hidden" id="updateTodoId"> <!-- Hidden input field to store the todoId -->
+                <input type="hidden" id="updateTodoId">
                 <button onclick="submitUpdate()" class="btn btn-primary">Update</button>
                 <button onclick="hideUpdateTodoForm()" class="btn btn-secondary">Cancel</button>
             </div>
@@ -103,12 +103,9 @@
                     <thead>
                         <tr>
                             <th scope="col">Title</th>
-                            <th scope="col">Description</th>
                             <th scope="col">Due Date</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Edit</th>
-                            <th scope="col">Remove</th>
+                            <th scope="col">Details</th>
                         </tr>
                     </thead>
                     <tbody id="todos">
@@ -117,7 +114,22 @@
                 </table>
             </div>
 
-            <div id="details"></div>
+            <div class="text-center pt-3 pb-2" id="todoDetails" style="display: none;">
+                <div id="detailsContainer" class="text-white">
+                    <h3>Todo Details</h3>
+                    <p><strong>Title:</strong> <span id="detailsTitle"></span></p>
+                    <p><strong>Description:</strong> <span id="detailsDescription"></span></p>
+                    <p><strong>Due Date:</strong> <span id="detailsDueDate"></span></p>
+                    <p><strong>Status:</strong> <span id="detailsStatus"></span></p>
+                    <p><strong>Category:</strong> <span id="detailsCategory"></span></p>
+                </div>
+                <button id="backButton" class="btn btn-secondary mt-3">Back to Todos</button>
+                <button id="deleteButton" class="btn btn-danger mt-3 ms-2">Delete</button>
+                <button id="updateButton" class="btn btn-primary mt-3 ms-2">Update</button>
+            </div>
+            
+            
+            
 
             <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
                 <strong>Success!</strong> <span id="successMessageText"></span>
