@@ -12,7 +12,7 @@
 <section class="vh-100 gradient-custom-2">
   <div class="container-fluid py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-12 col-xl-10">
+      <div class="col-md-12 col-xl-6">
 
         <div class="card mask-custom">
           <div class="card-body p-4 text-white">
@@ -22,6 +22,20 @@
                 alt="Check" width="60">
               <h2 class="my-4">Todo List</h2>
               <button onclick="showAddTodoForm()" class="btn btn-primary mb-3">Add Todo</button>
+            </div>
+            <div id="todoList" class="table-responsive">
+                <table class="table text-white mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="todos">
+                        <!-- Todo items will be rendered here -->
+                    </tbody>
+                </table>
             </div>
 
             <div id="addTodoForm" style="display: none;">
@@ -96,21 +110,6 @@
                 <input type="hidden" id="updateTodoId">
                 <button onclick="submitUpdate()" class="btn btn-primary">Update</button>
                 <button onclick="hideUpdateTodoForm()" class="btn btn-secondary">Cancel</button>
-            </div>
-
-            <div id="todoList" class="table-responsive">
-                <table class="table text-white mb-0">
-                    <thead>
-                        <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Details</th>
-                        </tr>
-                    </thead>
-                    <tbody id="todos">
-                        <!-- Todo items will be rendered here -->
-                    </tbody>
-                </table>
             </div>
 
             <div class="text-center pt-3 pb-2" id="todoDetails" style="display: none;">
