@@ -1,14 +1,13 @@
 let addTodoFormVisible = false;
 let updateTodoFormVisible = false;
-let todoListVisible = true; 
-
+let todoListVisible = true;
 
 // fetchTodos function
 function fetchTodos() {
     fetch('https://nicodeshub.com/todo_app/api/todo_list')
         .then(response => response.json())
         .then(data => {
-            renderTodos(data); 
+            renderTodos(data);
         })
         .catch(error => console.error('Error fetching todos:', error));
 }
@@ -36,30 +35,30 @@ function renderTodos(todos) {
         const statusTd = document.createElement('td');
         statusTd.textContent = todo.status;
 
-        const detailsButtonTd = document.createElement('td'); 
+        const detailsButtonTd = document.createElement('td');
         const detailsButton = document.createElement('button');
         detailsButton.textContent = 'Details';
         detailsButton.classList.add('btn', 'btn-primary');
         detailsButton.addEventListener('click', () => showTodoDetails(todo));
-        detailsButtonTd.appendChild(detailsButton); 
+        detailsButtonTd.appendChild(detailsButton);
 
         todoTr.appendChild(titleTd);
         todoTr.appendChild(dueDateTd);
         todoTr.appendChild(statusTd);
-        todoTr.appendChild(detailsButtonTd); 
+        todoTr.appendChild(detailsButtonTd);
 
         todosContainer.appendChild(todoTr);
     });
 }
 
-// Function to show the todo list
+// Function to show todo list
 function showTodoList() {
     const todoList = document.getElementById('todoList');
     todoList.style.display = 'block';
     todoListVisible = true;
 }
 
-// Function to hide the todo list
+// Function to hide todo list
 function hideTodoList() {
     const todoList = document.getElementById('todoList');
     todoList.style.display = 'none';
@@ -93,17 +92,22 @@ function showTodoDetails(todo) {
     updateButton.style.display = 'inline-block';
 
     // Add event listeners with the todo id
-    document.getElementById('backButton').addEventListener('click', () => {
+    backButton.addEventListener('click', () => {
         hideTodoDetails();
-        showTodoList(); 
+        showTodoList();
     });
-    document.getElementById('deleteButton').addEventListener('click', () => deleteTodoConfirm(todo.id));
-    document.getElementById('updateButton').addEventListener('click', () => {
-        showUpdateTodoForm(todo.id);
+
+    if (!deleteButton.getAttribute('data-event-listener-added')) {
+        deleteButton.addEventListener('click', () => deleteTodoConfirm(todo.id));
+        deleteButton.setAttribute('data-event-listener-added', 'true');
+    }
+
+    // Pass todo object to showUpdateTodoForm
+    updateButton.addEventListener('click', () => {
+        showUpdateTodoForm(todo);
         hideTodoDetails();
     });
 }
-
 
 // Function to hide todo details
 function hideTodoDetails() {
@@ -114,7 +118,7 @@ function hideTodoDetails() {
 // Function to show the add todo form
 function showAddTodoForm() {
     if (!addTodoFormVisible && !updateTodoFormVisible) {
-        hideTodoList(); 
+        hideTodoList();
         const addTodoForm = document.getElementById('addTodoForm');
         addTodoForm.style.display = 'block';
         addTodoFormVisible = true;
@@ -177,7 +181,7 @@ function showUpdateTodoForm(todo) {
         document.getElementById('updateDueDate').value = todo.date_due;
         document.getElementById('updateComplete').value = todo.status;
         document.getElementById('updateCategory').value = todo.category;
-        document.getElementById('updateTodoId').value = todo.id; 
+        document.getElementById('updateTodoId').value = todo.id;
 
         updateTodoForm.style.display = 'block';
         updateTodoFormVisible = true;
@@ -195,7 +199,7 @@ function hideUpdateTodoForm() {
 
 // submitUpdate function
 function submitUpdate() {
-    const todoId = document.getElementById('updateTodoId').value; 
+    const todoId = document.getElementById('updateTodoId').value;
     const updateTitleInput = document.getElementById('updateTitle').value;
     const updateNoteInput = document.getElementById('updateNote').value;
     const updateDueDateInput = new Date(document.getElementById('updateDueDate').value);
@@ -224,7 +228,7 @@ function submitUpdate() {
             throw new Error('Failed to update todo');
         }
         fetchTodos();
-        hideUpdateTodoForm(); 
+        hideUpdateTodoForm();
         showSuccessMessage('Todo updated successfully!');
     })
     .catch(error => console.error('Error updating todo:', error));
@@ -247,7 +251,9 @@ function deleteTodo(id) {
         if (!response.ok) {
             throw new Error('Failed to delete todo');
         }
-        fetchTodos(); 
+        fetchTodos();
+        showTodoList()
+        hideTodoDetails();
         showSuccessMessage('Todo deleted successfully!');
     })
     .catch(error => console.error('Error deleting todo:', error));
@@ -261,7 +267,7 @@ function showSuccessMessage(message) {
     successMessage.style.display = 'block';
     setTimeout(() => {
         successMessage.style.display = 'none';
-    }, 3000); 
+    }, 3000);
 }
 
 // fetch of todos when the DOM content is loaded
