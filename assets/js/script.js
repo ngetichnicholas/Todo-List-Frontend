@@ -78,8 +78,8 @@ function showTodoDetails(todo) {
 
     detailsTitle.textContent = todo.title;
     detailsDescription.textContent = todo.description;
-    detailsCreatedDate.textContent = formatDate(todo.date_created); 
-    detailsDueDate.textContent = formatDate(todo.date_due); 
+    detailsCreatedDate.textContent = formatDate(todo.date_created);
+    detailsDueDate.textContent = formatDate(todo.date_due);
     detailsStatus.textContent = todo.status;
     detailsCategory.textContent = todo.category;
 
@@ -97,12 +97,8 @@ function showTodoDetails(todo) {
         showTodoList();
     });
 
-    if (!deleteButton.getAttribute('data-event-listener-added')) {
-        deleteButton.addEventListener('click', () => deleteTodoConfirm(todo.id));
-        deleteButton.setAttribute('data-event-listener-added', 'true');
-    }
+    deleteButton.addEventListener('click', () => deleteTodoConfirm(todo.id));
 
-    // Pass todo object to showUpdateTodoForm
     updateButton.addEventListener('click', () => {
         showUpdateTodoForm(todo);
         hideTodoDetails();
@@ -175,7 +171,6 @@ function showUpdateTodoForm(todo) {
     if (!updateTodoFormVisible && !addTodoFormVisible) {
         hideTodoList();
         const updateTodoForm = document.getElementById('updateTodoForm');
-        // Populate form fields with todo data
         document.getElementById('updateTitle').value = todo.title;
         document.getElementById('updateNote').value = todo.description;
         document.getElementById('updateDueDate').value = todo.date_due;
@@ -196,8 +191,7 @@ function hideUpdateTodoForm() {
     showTodoList();
 }
 
-
-// submitUpdate function
+// Function to update a todo
 function submitUpdate() {
     const todoId = document.getElementById('updateTodoId').value;
     const updateTitleInput = document.getElementById('updateTitle').value;
@@ -234,7 +228,7 @@ function submitUpdate() {
     .catch(error => console.error('Error updating todo:', error));
 }
 
-// deleteTodoConfirm function
+// Function to confirm and delete a todo
 function deleteTodoConfirm(id) {
     const confirmDelete = confirm('Are you sure you want to delete this todo?');
     if (confirmDelete) {
@@ -242,7 +236,7 @@ function deleteTodoConfirm(id) {
     }
 }
 
-// deleteTodo function
+// Function to delete a todo
 function deleteTodo(id) {
     fetch(`https://nicodeshub.com/todo_app/api/delete_todo/${id}`, {
         method: 'DELETE',
@@ -270,7 +264,7 @@ function showSuccessMessage(message) {
     }, 3000);
 }
 
-// fetch of todos when the DOM content is loaded
+// Fetch todos when the DOM content is loaded
 document.addEventListener("DOMContentLoaded", function() {
     fetchTodos();
 });
