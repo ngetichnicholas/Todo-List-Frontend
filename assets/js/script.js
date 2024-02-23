@@ -24,14 +24,6 @@ function renderTodos(todos) {
         const titleTd = document.createElement('td');
         titleTd.textContent = todo.title;
 
-        // Format the date to display only the date without time and timezone
-        const dueDate = new Date(todo.date_due);
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        const formattedDueDate = dueDate.toLocaleDateString('en-US', options);
-
-        const dueDateTd = document.createElement('td');
-        dueDateTd.textContent = formattedDueDate;
-
         const statusTd = document.createElement('td');
         statusTd.textContent = todo.status;
 
@@ -43,7 +35,6 @@ function renderTodos(todos) {
         detailsButtonTd.appendChild(detailsButton);
 
         todoTr.appendChild(titleTd);
-        todoTr.appendChild(dueDateTd);
         todoTr.appendChild(statusTd);
         todoTr.appendChild(detailsButtonTd);
 
@@ -65,11 +56,19 @@ function hideTodoList() {
     todoListVisible = false;
 }
 
+// Function to format date
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return date.toLocaleDateString('en-US', options);
+}
+
 // Function to show todo details
 function showTodoDetails(todo) {
     const detailsContainer = document.getElementById('todoDetails');
     const detailsTitle = document.getElementById('detailsTitle');
     const detailsDescription = document.getElementById('detailsDescription');
+    const detailsCreatedDate = document.getElementById('detailsCreatedDate');
     const detailsDueDate = document.getElementById('detailsDueDate');
     const detailsStatus = document.getElementById('detailsStatus');
     const detailsCategory = document.getElementById('detailsCategory');
@@ -79,7 +78,8 @@ function showTodoDetails(todo) {
 
     detailsTitle.textContent = todo.title;
     detailsDescription.textContent = todo.description;
-    detailsDueDate.textContent = todo.date_due;
+    detailsCreatedDate.textContent = formatDate(todo.date_created); 
+    detailsDueDate.textContent = formatDate(todo.date_due); 
     detailsStatus.textContent = todo.status;
     detailsCategory.textContent = todo.category;
 
