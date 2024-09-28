@@ -4,7 +4,7 @@ let todoListVisible = true;
 
 // fetchTodos function
 function fetchTodos() {
-    fetch('https://nicodeshub.com/todo_app/api/todo_list')
+    fetch('http://192.168.49.2:31274/api/todo_list')
         .then(response => response.json())
         .then(data => {
             renderTodos(data);
@@ -148,7 +148,7 @@ function addTodo() {
         category: categoryInput
     };
 
-    fetch('https://nicodeshub.com/todo_app/api/add_todo', {
+    fetch('http://192.168.49.2:31274/api/add_todo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -210,7 +210,7 @@ function submitUpdate() {
         category: updateCategoryInput
     };
 
-    fetch(`https://nicodeshub.com/todo_app/api/update_todo/${todoId}`, {
+    fetch(`http://192.168.49.2:31274/api/update_todo/${todoId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -238,7 +238,7 @@ function deleteTodoConfirm(id) {
 
 // Function to delete a todo
 function deleteTodo(id) {
-    fetch(`https://nicodeshub.com/todo_app/api/delete_todo/${id}`, {
+    fetch(`http://192.168.49.2:31274/api/delete_todo/${id}`, {
         method: 'DELETE',
     })
     .then(response => {
